@@ -109,15 +109,8 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>io.fabric8</groupId>
+                        <groupId>org.jboss.redhat-fuse</groupId>
                         <artifactId>fabric8-maven-plugin</artifactId>
-                        <configuration>
-                            <enricher>
-                                <excludes>
-                                    <exclude>fmp-openshift-route</exclude>
-                                </excludes>
-                            </enricher>
-                        </configuration>
                         <executions>
                             <execution>
                                 <goals>
