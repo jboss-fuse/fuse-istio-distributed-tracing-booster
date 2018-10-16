@@ -10,7 +10,8 @@ The Fuse Istio distributed tracing booster demonstrate Istio’s Distributed Tra
 * A _name service_ that returns a name to greet.
 * A _greeting service_ that invokes the name service to get a name and then returns the `Hello, NAME` string.
 
-By injecting Istio envoy proxy sidecars containers
+By injecting Istio envoy proxy sidecars containers both applications will be part of a so called service mesh and a number of tracing informations can be automatically gathered by Istio following the flow of the request across the services.
+
 == Deployment options
 
 You can run this booster in the following modes:
