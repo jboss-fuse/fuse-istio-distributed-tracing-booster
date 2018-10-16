@@ -1,7 +1,7 @@
 package com.redhat.fuse.boosters.istio.dt;
 
-import io.fabric8.kubernetes.api.model.v4_0.HasMetadata;
-import io.fabric8.openshift.clnt.v4_0.OpenShiftClient;
+import io.fabric8.kubernetes.api.model.v2_6.HasMetadata;
+import io.fabric8.openshift.clnt.v2_6.OpenShiftClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Test;
