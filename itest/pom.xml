@@ -12,13 +12,18 @@
     <artifactId>itest</artifactId>
 
     <name>Fuse :: Boosters :: Istio :: Distributed tracing :: Integration Tests</name>
-
     <properties>
-
+        <openshift.client.version>2.6.3</openshift.client.version>
     </properties>
 
     <dependencies>
         <!-- Test -->
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>openshift-client</artifactId>
+            <version>${openshift.client.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-requirement</artifactId>
