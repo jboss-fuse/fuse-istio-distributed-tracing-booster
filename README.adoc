@@ -1,5 +1,6 @@
 :launchURL: https://developers.redhat.com/launch
 :repoName: fuse-istio-distributed-tracing-booster
+:image: registry.access.redhat.com/fuse7/fuse-java-openshift:1.0
 
 = Istio distributed tracing - Fuse Booster
 
@@ -11,6 +12,7 @@ The Fuse Istio distributed tracing booster demonstrate Istio’s Distributed Tra
 * A _greeting service_ that invokes the name service to get a name and then returns the `Hello, NAME` string.
 
 By injecting Istio envoy proxy sidecars containers
+
 == Deployment options
 
 You can run this booster in the following modes:
@@ -65,6 +67,82 @@ $ cd my_openshift/fuse-springboot-circuit-breaker-booster
 [source,bash,options="nowrap",subs="attributes+"]
 ----
 $ mvn clean -DskipTests fabric8:deploy -Popenshift
+----
+
+. If your environment dose not support automatic sidecar injection, you need to manually inject istio sidecar envoy proxy:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc get dc name-service -o yaml | /home/valdar/Downloads/istio-1.0.2/bin/istioctl kube-inject -f - | oc apply -f -
+----
+
+. Create a RouteRule to forward traffic from istio-ingress to the demo application:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc create -f istio/greetings-gateway.yml
+----
+
+. Access the application trough istio-ingress:
++
+Run the following command to determine the appropriate URL to access our demo. Make sure you access the url with the HTTP scheme. HTTPS is NOT enabled by default:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/greeting/
+----
++
+The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path. Open this URL in your a web browser.
+
+. Access the Jaeger tracing dashboard
++
+The traces from the invocation of the two endpoints should look like the following:
++
+image::doc/trace.png[]
++
+Note that it could take a few seconds for all the spans to be collected and presented in a trace that matches the picture above
+
+[#single-node-without-preinstalled-images]
+=== Running the booster on a single-node OpenShift cluster without preinstalled images
+To deploy your booster to a running single-node OpenShift cluster without preinstalled images:
+
+To deploy this booster to a running single-node OpenShift cluster:
+
+. Download the project and extract the archive on your local filesystem.
+
+. Log in to your OpenShift cluster:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc login -u system:admin
+----
+
+. Create a new OpenShift project for the booster:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc new-project MY_PROJECT_NAME
+----
+
+. Import base images in your newly created project (MY_PROJECT_NAME):
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc import-image fis-java-openshift:2.0 --from={image} --confirm
+----
+
+. Change the directory to the folder that contains the extracted booster application (for example, `my_openshift/{repoName}`) :
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ cd my_openshift/fuse-springboot-circuit-breaker-booster
+----
+
+. Build and deploy the project to the OpenShift cluster:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ mvn clean -DskipTests fabric8:deploy -Popenshift -Dfabric8.generator.fromMode=istag -Dfabric8.generator.from=MY_PROJECT_NAME/fis-java-openshift:2.0
 ----
 
 . If your environment dose not support automatic sidecar injection, you need to manually inject istio sidecar envoy proxy:
