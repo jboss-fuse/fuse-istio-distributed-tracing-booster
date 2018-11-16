@@ -112,5 +112,4 @@ To deploy the Fuse Istio distributed tracing booster directly to OpenShift Onlin
 
 . Go to link:{launchURL}[] and login.
 . Click *Launch Your Project*.
-. Follow the on-screen instructions to create an application. Select the *Istio - Distributed Tracing* mission and the *Fuse* runtime.
-
+. Follow the on-screen instructions to create an application. Select *Code Locally, Build and Deploy*, *Istio - Distributed Tracing* mission, and the *Fuse* runtime.
