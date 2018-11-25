@@ -74,7 +74,7 @@ $ mvn clean -DskipTests fabric8:deploy -Popenshift
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ oc get dc name-service -o yaml | /home/username/Downloads/istio-1.0.2/bin/istioctl kube-inject -f - | oc apply -f -
+$ oc get dc name-service -o yaml | <istio_install_directory>/bin/istioctl kube-inject -f - | oc apply -f -
 ----
 
 . Create a RouteRule to forward traffic from `istio-ingress` to the booster application:
