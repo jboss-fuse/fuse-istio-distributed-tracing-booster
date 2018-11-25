@@ -6,12 +6,12 @@
 
 == Overview
 
-The Fuse Istio distributed tracing booster demonstrate Istio’s Distributed Tracing via a (minimally) instrumented set of Apache Camel/Spring Boot applications:
+The Fuse Istio distributed tracing booster demonstrates Istio’s Distributed Tracing via a (minimally) instrumented set of Apache Camel/Spring Boot applications:
 
 * A _name service_ that returns a name to greet.
 * A _greeting service_ that invokes the name service to get a name and then returns the `Hello, NAME` string.
 
-By injecting Istio envoy proxy sidecars containers both applications will be part of a so called service mesh and a number of tracing informations can be automatically gathered by Istio following the flow of the request across the services.
+When you run this booster, it injects Istio envoy proxy sidecars containers and both applications become part of a "service mesh". Istio automatically gathers tracing information by following the flow of a request across the services.
 
 == Deployment options
 
@@ -20,26 +20,28 @@ You can run this booster in the following modes:
 * Single-node OpenShift cluster
 * OpenShift Online at link:{launchURL}[]
 
-The most effective way to run this booster is to deploy and run the project on OpenShift.
 
-For more details about running this booster on a single-node OpenShift cluster, CI/CD deployments, as well as the rest of the runtime, see the link:http://appdev.openshift.io/docs/spring-boot-runtime.html[Spring Boot Runtime Guide].
+=== Prerequisites
 
-IMPORTANT: This booster requires Java 8 JDK or later and Maven 3.3.x or later.
+* Java 8 JDK (or later)
+* Maven 3.3.x (or later)
+* OpenShift 3.10 (or later) / Kubernetes 1.10 (or later) cluster
+* Istio 1.0.x installed on the cluster
++
+If Istio is not installed and you have admin privileges, you can install it using the link:https://github.com/Maistra/istio-operator[Istio Operator] by following  link:https://github.com/Maistra/openshift-ansible/blob/maistra-0.1.0-ocp-3.1.0-istio-1.0.0/istio/Installation.md[these instructions].
 
-== Prerequisites
-* Openshift 3.10 (or newer) / Kubernetes 1.10 (or newer) cluster
-* Istio 1.0.x installed on the aforementioned cluster
-** if istio is not installed and you have admin privileges, you can isntall it using the link:https://github.com/Maistra/istio-operator[Istio Operator]. Follow link:https://github.com/Maistra/openshift-ansible/blob/maistra-0.1.0-ocp-3.1.0-istio-1.0.0/istio/Installation.md[these] instructions for more information about the Operator
-** Login to the cluster with the *admin* user
+As part of the process of creating this booster, link:{launchURL}[] sets up a project with a CI/CD deployment of this booster. You can see the status of this deployment in your single-node OpenShift cluster or OpenShift Online web console.
 
 == Running the booster on a single-node OpenShift cluster
 A single-node OpenShift cluster provides you with access to a cloud environment that is similar to a production environment.
 
 If you have a single-node OpenShift cluster, such as Minishift or the Red Hat Container Development Kit, link:http://appdev.openshift.io/docs/minishift-installation.html[installed and running], you can deploy your booster there.
 
+For more details about running this booster on a single-node OpenShift cluster, CI/CD deployments, as well as the rest of the runtime, see the link:http://appdev.openshift.io/docs/spring-boot-runtime.html[Spring Boot Runtime Guide].
+
 To deploy this booster to a running single-node OpenShift cluster:
 
-. Download the project and extract the archive on your local filesystem.
+. Download the booster project and extract the archive on your local file system.
 
 . Log in to your OpenShift cluster:
 +
@@ -59,7 +61,7 @@ $ oc new-project MY_PROJECT_NAME
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ cd my_openshift/fuse-springboot-circuit-breaker-booster
+$ cd my_openshift/fuse-istio-distributed-tracing-booster
 ----
 
 . Build and deploy the project to the OpenShift cluster:
@@ -69,38 +71,40 @@ $ cd my_openshift/fuse-springboot-circuit-breaker-booster
 $ mvn clean -DskipTests fabric8:deploy -Popenshift
 ----
 
-. If your environment dose not support automatic sidecar injection, you need to manually inject istio sidecar envoy proxy:
+. If your environment does not support automatic sidecar injection, you must manually inject the Istio sidecar envoy proxy:
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ oc get dc name-service -o yaml | /home/valdar/Downloads/istio-1.0.2/bin/istioctl kube-inject -f - | oc apply -f -
+$ oc get dc name-service -o yaml | <istio_install_directory>/bin/istioctl kube-inject -f - | oc apply -f -
 ----
 
-. Create a RouteRule to forward traffic from istio-ingress to the demo application:
+. Create a RouteRule to forward traffic from `istio-ingress` to the booster application:
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
 $ oc create -f istio/greetings-gateway.yml
 ----
 
-. Access the application trough istio-ingress:
+. Access the application through `istio-ingress`:
+
+.. Run the following command to retrieve the appropriate URL to access the booster application: 
 +
-Run the following command to determine the appropriate URL to access our demo. Make sure you access the url with the HTTP scheme. HTTPS is NOT enabled by default:
+*Note:* Make sure you that you specify the URL with the HTTP scheme. HTTPS is *not* enabled by default.)
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
 $ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/greeting/
 ----
 +
-The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path. Open this URL in your a web browser.
+The command returns the istio-system istio-ingress URL, appended with the RouteRule path. 
 
-. Access the Jaeger tracing dashboard
+.. Open the returned URL in a web browser.
+
+.. Access the Jaeger tracing dashboard.
 +
-The traces from the invocation of the two endpoints should look like the following:
+After a few seconds, when all the spans have been collected and presented in a trace, the traces from the invocation of the two endpoints should look similar to the following: 
 +
 image::doc/trace.png[]
-+
-Note that it could take a few seconds for all the spans to be collected and presented in a trace that matches the picture above
 
 [#single-node-without-preinstalled-images]
 === Running the booster on a single-node OpenShift cluster without preinstalled images
@@ -180,10 +184,10 @@ Note that it could take a few seconds for all the spans to be collected and pres
 
 == Running the booster on OpenShift Online
 
-To deploy the circuit breaker booster directly to OpenShift Online when you create the project at link:{launchURL}[]:
+== Running the booster on OpenShift Online
 
-. Go to link:{launchURL}[].
-. At the *Deployment step*, select *Use OpenShift Online*.
-. Follow the on-screen instructions to create a new *Circuit Breaker* project using the *Fuse* runtime.
+To deploy the Fuse Istio distributed tracing booster directly to OpenShift Online:
 
-NOTE: As part of the process of creating this booster, link:{launchURL}[] sets up a project with a CI/CD deployment of this booster. You can see the status of this deployment in your single-node OpenShift cluster or OpenShift Online web console.
+. Go to link:{launchURL}[] and login.
+. Click *Launch Your Project*.
+. Follow the on-screen instructions to create an application. Select *Code Locally, Build and Deploy*, *Istio - Distributed Tracing* mission, and the *Fuse* runtime.
