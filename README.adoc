@@ -2,11 +2,11 @@
 :repoName: fuse-istio-distributed-tracing-booster
 :image: registry.access.redhat.com/fuse7/fuse-java-openshift:1.0
 
-= Istio distributed tracing - Fuse Booster
+= Istio Distributed Tracing - Fuse Booster
 
 == Overview
 
-The Fuse Istio distributed tracing booster demonstrates Istio’s Distributed Tracing via a (minimally) instrumented set of Apache Camel/Spring Boot applications:
+The Fuse Istio Distributed Tracing booster demonstrates Istio’s Distributed Tracing via a (minimally) instrumented set of Apache Camel/Spring Boot applications:
 
 * A _name service_ that returns a name to greet.
 * A _greeting service_ that invokes the name service to get a name and then returns the `Hello, NAME` string.
@@ -108,9 +108,8 @@ image::doc/trace.png[]
 
 [#single-node-without-preinstalled-images]
 === Running the booster on a single-node OpenShift cluster without preinstalled images
-To deploy your booster to a running single-node OpenShift cluster without preinstalled images:
 
-To deploy this booster to a running single-node OpenShift cluster:
+To deploy your booster to a running single-node OpenShift cluster without preinstalled images:
 
 . Download the project and extract the archive on your local filesystem.
 
@@ -128,7 +127,7 @@ $ oc login -u system:admin
 $ oc new-project MY_PROJECT_NAME
 ----
 
-. Import base images in your newly created project (MY_PROJECT_NAME):
+. Import base images to your newly created project (MY_PROJECT_NAME):
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
@@ -139,7 +138,7 @@ $ oc import-image fis-java-openshift:2.0 --from={image} --confirm
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ cd my_openshift/fuse-springboot-circuit-breaker-booster
+$ cd my_openshift/fuse-istio-distributed-tracing-booster
 ----
 
 . Build and deploy the project to the OpenShift cluster:
@@ -153,36 +152,35 @@ $ mvn clean -DskipTests fabric8:deploy -Popenshift -Dfabric8.generator.fromMode=
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ oc get dc name-service -o yaml | /home/valdar/Downloads/istio-1.0.2/bin/istioctl kube-inject -f - | oc apply -f -
+$ oc get dc name-service -o yaml | <istio_install_directory>/bin/istioctl kube-inject -f - | oc apply -f -
 ----
 
-. Create a RouteRule to forward traffic from istio-ingress to the demo application:
+. Create a RouteRule to forward traffic from istio-ingress to the booster application:
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
 $ oc create -f istio/greetings-gateway.yml
 ----
 
-. Access the application trough istio-ingress:
+. Access the application through istio-ingress:
 +
-Run the following command to determine the appropriate URL to access our demo. Make sure you access the url with the HTTP scheme. HTTPS is NOT enabled by default:
+Run the following command to determine the appropriate URL to access the booster application. 
++
+*Note:* Make sure you that you specify the URL with the HTTP scheme. HTTPS is *not* enabled by default.
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
 $ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/greeting/
 ----
 +
-The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path. Open this URL in your a web browser.
+The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path. Open this URL in a web browser.
 
-. Access the Jaeger tracing dashboard
+. Access the Jaeger tracing dashboard.
 +
-The traces from the invocation of the two endpoints should look like the following:
+After a few seconds, after all the spans have been collected, the traces from the invocation of the two endpoints should look similar to the following example: 
 +
 image::doc/trace.png[]
-+
-Note that it could take a few seconds for all the spans to be collected and presented in a trace that matches the picture above
 
-== Running the booster on OpenShift Online
 
 == Running the booster on OpenShift Online
 
