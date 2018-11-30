@@ -89,7 +89,7 @@ $ oc create -f istio/greetings-gateway.yml
 
 .. Run the following command to retrieve the appropriate URL to access the booster application: 
 +
-*Note:* Make sure you that you specify the URL with the HTTP scheme. HTTPS is *not* enabled by default.)
+*Note:* Make sure you that you specify the URL with the HTTP scheme. HTTPS is *not* enabled by default.
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
@@ -102,7 +102,7 @@ The command returns the istio-system istio-ingress URL, appended with the RouteR
 
 .. Access the Jaeger tracing dashboard.
 +
-After a few seconds, when all the spans have been collected and presented in a trace, the traces from the invocation of the two endpoints should look similar to the following: 
+After a few seconds, after all the spans have been collected, the traces from the invocation of the two endpoints should look similar to the following example: 
 +
 image::doc/trace.png[]
 
