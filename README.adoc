@@ -93,16 +93,16 @@ $ oc create -f istio/greetings-gateway.yml
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/greeting/
+$ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/greetings/
 ----
 +
 The command returns the istio-system istio-ingress URL, appended with the RouteRule path. 
 
-.. Open the returned URL in a web browser.
+.. Open the returned URL in a web browser. You should see the json output of the Greetings REST service.
 
-.. Access the Jaeger tracing dashboard.
+.. Now you can access the Jaeger tracing dashboard and found data of the just completed REST invocation.
 +
-After a few seconds, after all the spans have been collected, the traces from the invocation of the two endpoints should look similar to the following example: 
+After a few seconds, after all the spans have been collected, the traces from the invocation of the REST endpoint should look similar to the following example: 
 +
 image::doc/trace.png[]
 
