@@ -87,7 +87,7 @@ $ oc create -f istio/greetings-gateway.yml
 
 . Access the application through `istio-ingress`:
 
-.. Run the following command to retrieve the appropriate URL to access the booster application: 
+.. Run the following command to retrieve the appropriate URL to access the booster application:
 +
 *Note:* Make sure you that you specify the URL with the HTTP scheme. HTTPS is *not* enabled by default.
 +
@@ -96,13 +96,13 @@ $ oc create -f istio/greetings-gateway.yml
 $ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/greetings/
 ----
 +
-The command returns the istio-system istio-ingress URL, appended with the RouteRule path. 
+The command returns the istio-system istio-ingress URL, appended with the RouteRule path.
 
 .. Open the returned URL in a web browser. You should see the json output of the Greetings REST service.
 
 .. Now you can access the Jaeger tracing dashboard and found data of the just completed REST invocation.
 +
-After a few seconds, after all the spans have been collected, the traces from the invocation of the REST endpoint should look similar to the following example: 
+After a few seconds, after all the spans have been collected, the traces from the invocation of the REST endpoint should look similar to the following example:
 +
 image::doc/trace.png[]
 
@@ -164,7 +164,7 @@ $ oc create -f istio/greetings-gateway.yml
 
 . Access the application through istio-ingress:
 +
-Run the following command to determine the appropriate URL to access the booster application. 
+Run the following command to determine the appropriate URL to access the booster application.
 +
 *Note:* Make sure you that you specify the URL with the HTTP scheme. HTTPS is *not* enabled by default.
 +
@@ -177,7 +177,7 @@ The result of the above command is the istio-system istio-ingress URL, appended 
 
 . Access the Jaeger tracing dashboard.
 +
-After a few seconds, after all the spans have been collected, the traces from the invocation of the two endpoints should look similar to the following example: 
+After a few seconds, after all the spans have been collected, the traces from the invocation of the REST endpoint should look similar to the following example:
 +
 image::doc/trace.png[]
 
