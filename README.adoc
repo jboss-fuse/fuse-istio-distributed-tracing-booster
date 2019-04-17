@@ -28,6 +28,7 @@ You can run this booster in the following modes:
 * Istio 1.0.x installed on the cluster
 +
 If Istio is not installed and you have admin privileges, you can install it using the link:https://github.com/Maistra/istio-operator[Istio Operator] by following  link:https://github.com/Maistra/openshift-ansible/blob/maistra-0.1.0-ocp-3.1.0-istio-1.0.0/istio/Installation.md[these instructions].
+* rewriteAppHTTPProbe: true or mTSL disabled as explained in link:https://istio.io/help/ops/setup/app-health-check/#probe-rewrite[Istio app health check probe rewritel]
 
 As part of the process of creating this booster, link:{launchURL}[] sets up a project with a CI/CD deployment of this booster. You can see the status of this deployment in your single-node OpenShift cluster or OpenShift Online web console.
 
@@ -75,14 +76,16 @@ $ mvn clean -DskipTests fabric8:deploy -Popenshift
 [source,bash,options="nowrap",subs="attributes+"]
 ----
 $ oc get dc name-service -o yaml | <istio_install_directory>/bin/istioctl kube-inject -f - | oc apply -f -
+$ oc get dc greetings-service -o yaml | <istio_install_directory>/bin/istioctl kube-inject -f - | oc apply -f -
 ----
 
 . Create a RouteRule to forward traffic from `istio-ingress` to the booster application:
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ oc create -f istio/greetings-gateway.yml
+$ oc create -f istio/greetings-gateway.yaml
 ----
+IMPORTANT: for how the istio gateway used in this example is configured this must be the only resource on the cluster of type `gateway.networking.istio.io`.
 
 . Access the application through `istio-ingress`:
 
@@ -92,7 +95,7 @@ $ oc create -f istio/greetings-gateway.yml
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/greetings/
+$ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/camel/greetings/
 ----
 +
 The command returns the istio-system istio-ingress URL, appended with the RouteRule path. 
