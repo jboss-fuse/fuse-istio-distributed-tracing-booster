@@ -156,13 +156,14 @@ $ mvn clean -DskipTests fabric8:deploy -Popenshift -Dfabric8.generator.fromMode=
 [source,bash,options="nowrap",subs="attributes+"]
 ----
 $ oc get dc name-service -o yaml | <istio_install_directory>/bin/istioctl kube-inject -f - | oc apply -f -
+$ oc get dc greetings-service -o yaml | <istio_install_directory>/bin/istioctl kube-inject -f - | oc apply -f -
 ----
 
 . Create a RouteRule to forward traffic from istio-ingress to the booster application:
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ oc create -f istio/greetings-gateway.yml
+$ oc create -f istio/greetings-gateway.yaml
 ----
 
 . Access the application through istio-ingress:
@@ -173,7 +174,7 @@ Run the following command to determine the appropriate URL to access the booster
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/greeting/
+$ echo http://$(oc get route istio-ingressgateway -o jsonpath='{.spec.host}{"\n"}' -n istio-system)/camel/greetings/
 ----
 +
 The result of the above command is the istio-system istio-ingress URL, appended with the RouteRule path. Open this URL in a web browser.
