@@ -21,7 +21,6 @@
         <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>openshift-client</artifactId>
-            <version>${openshift.client.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -43,7 +42,6 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-standalone</artifactId>
-            <version>${arquillian.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

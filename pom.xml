@@ -14,13 +14,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <fuse.bom.version>7.3.1.fuse-731003-redhat-00003</fuse.bom.version>
+<!--        <fuse.bom.version>7.3.1.fuse-731003-redhat-00003</fuse.bom.version>-->
+        <fuse.bom.version>7.4.0-SNAPSHOT</fuse.bom.version>
+
 
         <jaeger.version>0.31.0</jaeger.version>
-
-        <!-- version of Arquillian -->
-        <arquillian.cube.version>1.17.1</arquillian.cube.version>
-        <arquillian.version>1.4.0.Final</arquillian.version>
     </properties>
 
     <dependencyManagement>
@@ -31,13 +29,6 @@
                 <version>${fuse.bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.arquillian.cube</groupId>
-                <artifactId>arquillian-cube-bom</artifactId>
-                <version>${arquillian.cube.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>io.jaegertracing</groupId>
@@ -87,7 +78,7 @@
                 <version>${fuse.bom.version}</version>
             </plugin>
             <plugin>
-                <groupId>io.fabric8</groupId>
+                <groupId>org.jboss.redhat-fuse</groupId>
                 <artifactId>fabric8-maven-plugin</artifactId>
                 <version>${fuse.bom.version}</version>
             </plugin>        
