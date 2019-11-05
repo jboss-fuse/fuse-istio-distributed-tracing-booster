@@ -134,7 +134,7 @@ $ oc new-project MY_PROJECT_NAME
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ oc import-image fis-java-openshift:2.0 --from={image} --confirm
+$ oc import-image fuse-java-openshift:2.0 --from={image} --confirm
 ----
 
 . Change the directory to the folder that contains the extracted booster application (for example, `my_openshift/{repoName}`) :
@@ -148,7 +148,7 @@ $ cd my_openshift/fuse-istio-distributed-tracing-booster
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ mvn clean -DskipTests fabric8:deploy -Popenshift -Dfabric8.generator.fromMode=istag -Dfabric8.generator.from=MY_PROJECT_NAME/fis-java-openshift:2.0
+$ mvn clean -DskipTests fabric8:deploy -Popenshift -Dfabric8.generator.fromMode=istag -Dfabric8.generator.from=MY_PROJECT_NAME/fuse-java-openshift:2.0
 ----
 
 . If your environment dose not support automatic sidecar injection, you need to manually inject istio sidecar envoy proxy:

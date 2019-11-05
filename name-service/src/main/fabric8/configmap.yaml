@@ -5,10 +5,12 @@ metadata:
 data:
   application.properties: |-
     server.port=8080
-    # disable all management enpoints except health
-    endpoints.enabled = false
-    endpoints.health.enabled = true
+    management.endpoints.web.base-path=/
+
+    jaeger.reporter.endpoint=http://jaeger-collector.istio-system.svc:14268/api/traces
+
+    # disable health defaults
     management.health.defaults.enabled=false
+
     camel.health.enabled=false
     camel.health.indicator.enabled=true
-    jaeger.reporter.endpoint=http://jaeger-collector.istio-system.svc:14268/api/traces
