@@ -39,6 +39,6 @@ public class HttpRequestTest {
     @Test
     public void healthShouldReturnOkMessage() throws Exception {
         Assert.assertEquals("{\"status\":\"UP\"}",
-                this.restTemplate.getForObject("http://localhost:" + port + "/health", String.class));
+                this.restTemplate.getForObject("http://localhost:" + port + "/actuator/health", String.class));
     }
 }
