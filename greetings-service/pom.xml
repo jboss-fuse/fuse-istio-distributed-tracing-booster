@@ -9,9 +9,9 @@
         <version>7.0.0.redhat-SNAPSHOT</version>
     </parent>
 
-    <artifactId>greetings-service</artifactId>
+    <artifactId>tracing-greetings-service</artifactId>
 
-    <name>Fuse :: Boosters :: Istio :: Distributed tracing :: Greetings service</name>
+    <name>Fuse :: Boosters :: Istio :: Distributed tracing :: Tracing Greetings service</name>
 
     <properties>
 
