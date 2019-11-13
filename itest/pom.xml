@@ -9,9 +9,9 @@
         <version>7.0.0.redhat-SNAPSHOT</version>
     </parent>
 
-    <artifactId>itest</artifactId>
+    <artifactId>tracing-itest</artifactId>
 
-    <name>Fuse :: Boosters :: Istio :: Distributed tracing :: Integration Tests</name>
+    <name>Fuse :: Boosters :: Istio :: Distributed tracing :: Tracing Integration Tests</name>
 
     <properties>
 
