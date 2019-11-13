@@ -9,9 +9,9 @@
         <version>7.0.0.redhat-SNAPSHOT</version>
     </parent>
 
-    <artifactId>name-service</artifactId>
+    <artifactId>tracing-name-service</artifactId>
 
-    <name>Fuse :: Boosters :: Istio :: Distributed tracing :: Name service</name>
+    <name>Fuse :: Boosters :: Istio :: Distributed tracing :: Tracing Name service</name>
 
     <properties>
 
