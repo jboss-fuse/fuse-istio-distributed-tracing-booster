@@ -17,6 +17,7 @@
         <fuse.bom.version>7.5.0.fuse-750029-redhat-00002</fuse.bom.version>
 
         <jaeger.version>0.31.0</jaeger.version>
+        <opentracing.version>${jaeger.version}</opentracing.version>
 
         <!-- version of Arquillian -->
         <arquillian.cube.version>1.17.1</arquillian.cube.version>
@@ -43,6 +44,16 @@
                 <groupId>io.jaegertracing</groupId>
                 <artifactId>jaeger-client</artifactId>
                 <version>${jaeger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentracing</groupId>
+                <artifactId>opentracing-api</artifactId>
+                <version>${opentracing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentracing</groupId>
+                <artifactId>opentracing-util</artifactId>
+                <version>${opentracing.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
