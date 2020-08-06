@@ -2,7 +2,7 @@
 :repoName: fuse-istio-distributed-tracing-booster
 :image-registry: registry.access.redhat.com
 :image-prefix: /fuse7/
-:image-name-version: fuse-java-openshift:1.6
+:image-name-version: fuse-java-openshift:1.7
 
 = Istio Distributed Tracing - Fuse Booster
 
