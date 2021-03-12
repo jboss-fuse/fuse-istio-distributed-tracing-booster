@@ -68,7 +68,7 @@ $ cd my_openshift/fuse-istio-distributed-tracing-booster
 +
 [source,bash,options="nowrap",subs="attributes+"]
 ----
-$ mvn clean -DskipTests fabric8:deploy -Popenshift
+$ mvn clean -DskipTests oc:deploy -Popenshift
 ----
 
 . If your environment does not support automatic sidecar injection, you must manually inject the Istio sidecar envoy proxy:
