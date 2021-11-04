@@ -3,7 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.redhat.fuse.boosters</groupId>
+    <groupId>com.redhat.fuse.boosters.tracing</groupId>
     <artifactId>fuse-istio-distributed-tracing-booster-parent</artifactId>
     <version>7.0.0.redhat-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -14,8 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <fuse.bom.version>7.9.0.fuse-sb2-790065-redhat-00001</fuse.bom.version>
-        <docker.image.version>registry.redhat.io/fuse7/fuse-java-openshift-rhel8:1.9</docker.image.version>
+        <fuse.bom.version>7.10.0.fuse-sb2-7_10_0-00008-redhat-00001</fuse.bom.version>
+        <docker.image.version>registry.redhat.io/fuse7/fuse-java-openshift-rhel8:1.10</docker.image.version>
 
         <jaeger.version>0.31.0</jaeger.version>
     </properties>

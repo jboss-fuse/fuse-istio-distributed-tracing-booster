@@ -3,16 +3,16 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: name-service
-    provider: fabric8
-    group: com.redhat.fuse.boosters
+    provider: jkube
+    group: com.redhat.fuse.boosters.tracing
   name: name-service
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     app: name-service
-    provider: fabric8
-    group: com.redhat.fuse.boosters
+    provider: jkube
+    group: com.redhat.fuse.boosters.tracing
   strategy:
     rollingParams:
       timeoutSeconds: 3600
@@ -23,8 +23,8 @@ spec:
         sidecar.istio.io/inject: true
       labels:
         app: name-service
-        provider: fabric8
-        group: com.redhat.fuse.boosters
+        provider: jkube
+        group: com.redhat.fuse.boosters.tracing
     spec:
       volumes:
       - name: config-volume
@@ -36,13 +36,3 @@ spec:
           - name: config-volume
             mountPath: /deployments/application.properties
             subPath: application.properties
-  triggers:
-  - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - name-service
-      from:
-        kind: ImageStreamTag
-        name: name-service:latest
-    type: ImageChange
