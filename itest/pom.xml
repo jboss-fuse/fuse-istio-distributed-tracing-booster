@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.redhat.fuse.boosters</groupId>
+        <groupId>com.redhat.fuse.boosters.tracing</groupId>
         <artifactId>fuse-istio-distributed-tracing-booster-parent</artifactId>
         <version>7.0.0.redhat-SNAPSHOT</version>
     </parent>

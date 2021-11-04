@@ -3,16 +3,16 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: greetings-service
-    provider: fabric8
-    group: com.redhat.fuse.boosters
+    provider: jkube
+    group: com.redhat.fuse.boosters.tracing
   name: greetings-service
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     app: greetings-service
-    provider: fabric8
-    group: com.redhat.fuse.boosters
+    provider: jkube
+    group: com.redhat.fuse.boosters.tracing
   strategy:
     rollingParams:
       timeoutSeconds: 3600
@@ -23,8 +23,8 @@ spec:
         sidecar.istio.io/inject: true
       labels:
         app: greetings-service
-        provider: fabric8
-        group: com.redhat.fuse.boosters
+        provider: jkube
+        group: com.redhat.fuse.boosters.tracing
     spec:
       volumes:
       - name: config-volume
@@ -32,17 +32,12 @@ spec:
           name: greetings-service
       containers:
       - name: greetings-service
+        env:
+          - name: NAME_SERVICE_SERVICE_HOST
+            value: "name-service"
+          - name: NAME_SERVICE_SERVICE_PORT
+            value: "8080"
         volumeMounts:
           - name: config-volume
             mountPath: /deployments/application.properties
             subPath: application.properties
-  triggers:
-  - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - greetings-service
-      from:
-        kind: ImageStreamTag
-        name: greetings-service:latest
-    type: ImageChange
