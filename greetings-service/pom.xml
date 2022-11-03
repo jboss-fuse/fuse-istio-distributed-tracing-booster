@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.redhat.fuse.boosters.tracing</groupId>
         <artifactId>fuse-istio-distributed-tracing-booster-parent</artifactId>
-        <version>7.0.0.redhat-SNAPSHOT</version>
+        <version>7.0.0.fuse-sb2-7_11_1-00007</version>
     </parent>
 
     <artifactId>greetings-service</artifactId>
