@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.redhat.fuse.boosters</groupId>
+        <groupId>com.redhat.fuse.boosters.tracing</groupId>
         <artifactId>fuse-istio-distributed-tracing-booster-parent</artifactId>
         <version>7.0.0.redhat-SNAPSHOT</version>
     </parent>
@@ -22,7 +22,6 @@
         <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>openshift-client</artifactId>
-            <version>${openshift.client.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -44,7 +43,6 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-standalone</artifactId>
-            <version>${arquillian.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
