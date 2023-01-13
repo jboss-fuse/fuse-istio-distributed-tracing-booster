@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpMethod;
@@ -26,21 +26,19 @@ public class HttpRequestTest {
 
     @Test
     public void greetingsShouldReturn500() throws Exception {
-        Assert.assertEquals( new Integer(500), this.restTemplate.execute("http://localhost:" + port + "/camel/greetings",
-                HttpMethod.GET,
-                null,
-                new ResponseExtractor<Integer>() {
+        Assert.assertEquals(new Integer(500), this.restTemplate.execute("http://localhost:" + port + "/camel/greetings",
+                HttpMethod.GET, null, new ResponseExtractor<Integer>() {
 
                     @Override
                     public Integer extractData(ClientHttpResponse response) throws IOException {
                         return response.getRawStatusCode();
                     }
-                }
-        ));
+                }));
     }
 
     @Test
     public void healthShouldReturnOkMessage() throws Exception {
-        Assert.assertEquals( "{\"status\":\"UP\"}", this.restTemplate.getForObject("http://localhost:" + port + "/health", String.class));
+        Assert.assertEquals("{\"status\":\"UP\"}",
+                this.restTemplate.getForObject("http://localhost:" + port + "/actuator/health", String.class));
     }
 }
